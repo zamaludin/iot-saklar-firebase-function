@@ -1,0 +1,23 @@
+const functions = require('firebase-functions');
+
+// // Create and Deploy Your First Cloud Functions
+// // https://firebase.google.com/docs/functions/write-firebase-functions
+//
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//  response.send("Hello from Firebase!");
+// });
+// The Firebase Admin SDK to access the Firebase Realtime Database.
+const admin = require('firebase-admin');
+admin.initializeApp();
+
+exports.lampOn = functions.https.onRequest(async (req, res) => {
+    await admin.database().ref('/Test').child('Stream').set(1);
+    // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+    res.json("Lamp On");
+});
+
+exports.lampOff = functions.https.onRequest(async (req, res) => {
+    await admin.database().ref('/Test').child('Stream').set(0);
+    // Redirect with 303 SEE OTHER to the URL of the pushed object in the Firebase console.
+    res.json("Lamp Off");
+});
